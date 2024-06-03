@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        button{
+            width: 100px;
+            height: 50px;
+        }
+    </style>
+</head>
+<body>
+    <button onclick="addItem()"></button>
+    <h1>My Website</h1>
+    <script>
+        async function addItem(){
+            let content = window.prompt("Gib etwas ein:");
+            let token = '{{ csrf_token }}';
+            let formData = new FormData();
+            formData.append('name', content);
+            formData.append('csrfmiddlewaretoken', token);
+            
+            let response = await fetch('/myList/', {method: 'POST', body: formData});
+            let data = await response.json();
+            console.log(data.name);
+        }
+
+    </script>
+</body>
+</html>
